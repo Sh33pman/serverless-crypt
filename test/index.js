@@ -62,14 +62,19 @@ describe('Crypt', () => {
         .stub(crypt, 'validate').returns(BbPromise.resolve());
       const addLibrariesStub = sinon
         .stub(crypt, 'addLibraries').returns(BbPromise.resolve());
+      const addSecretFileStub = sinon
+        .stub(crypt, 'addSecretFile').returns(BbPromise.resolve());
 
       return crypt.hooks['before:deploy:function:deploy']().then(() => {
         expect(validateStub.calledOnce).to.equal(true);
         expect(addLibrariesStub.calledAfter(validateStub))
           .to.equal(true);
+        expect(addSecretFileStub.calledAfter(addLibrariesStub))
+          .to.equal(true);
 
         crypt.validate.restore();
         crypt.addLibraries.restore();
+        crypt.addSecretFile.restore();
       });
     });
 
@@ -78,14 +83,19 @@ describe('Crypt', () => {
         .stub(crypt, 'validate').returns(BbPromise.resolve());
       const removeLibrariesStub = sinon
         .stub(crypt, 'removeLibraries').returns(BbPromise.resolve());
+      const removeSecretFileStub = sinon
+        .stub(crypt, 'removeSecretFile').returns(BbPromise.resolve());
 
       return crypt.hooks['after:deploy:function:deploy']().then(() => {
         expect(validateStub.calledOnce).to.equal(true);
         expect(removeLibrariesStub.calledAfter(validateStub))
           .to.equal(true);
+        expect(removeSecretFileStub.calledAfter(removeLibrariesStub))
+          .to.equal(true);
 
         crypt.validate.restore();
         crypt.removeLibraries.restore();
+        crypt.removeSecretFile.restore();
       });
     });
 
@@ -94,14 +104,19 @@ describe('Crypt', () => {
         .stub(crypt, 'validate').returns(BbPromise.resolve());
       const addLibrariesStub = sinon
         .stub(crypt, 'addLibraries').returns(BbPromise.resolve());
+      const addSecretFileStub = sinon
+        .stub(crypt, 'addSecretFile').returns(BbPromise.resolve());
 
       return crypt.hooks['before:deploy:createDeploymentArtifacts']().then(() => {
         expect(validateStub.calledOnce).to.equal(true);
         expect(addLibrariesStub.calledAfter(validateStub))
           .to.equal(true);
+        expect(addSecretFileStub.calledAfter(addLibrariesStub))
+          .to.equal(true);
 
         crypt.validate.restore();
         crypt.addLibraries.restore();
+        crypt.addSecretFile.restore();
       });
     });
 
